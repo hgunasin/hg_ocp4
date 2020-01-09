@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: node-ssh
+  name: node-ssh
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node-ssh
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: node-ssh
+    spec:
+      containers:
+      - image: image-registry.openshift-image-registry.svc:5000/node-ssh/node-ssh:latest
+        name: node-ssh
+        resources: {}
+        volumeMounts:
+        - name: node-ssh
+          mountPath: /.ssh
+      volumes:
+      - name: node-ssh
+        secret:
+          secretName: node-ssh
+          defaultMode: 0600
+status: {}
